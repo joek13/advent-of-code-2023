@@ -1,7 +1,7 @@
 module Day1 (day1a, day1b) where
 
 import Data.Bifunctor (bimap)
-import Data.List (find)
+import Data.List (find, isPrefixOf)
 import Lib (readLines)
 
 isDigit :: Char -> Bool
@@ -12,13 +12,10 @@ calibrationValue str =
   let digits = filter isDigit str
    in read (head digits : [last digits])
 
-startsWith :: (Eq a) => [a] -> [a] -> Bool
-startsWith xs pfx = take (length pfx) xs == pfx
-
 replaceLeft :: (Eq a) => [([a], [a])] -> [a] -> [a]
 replaceLeft _ [] = []
 replaceLeft reps xs =
-  case find ((xs `startsWith`) . fst) reps of
+  case find ((`isPrefixOf` xs) . fst) reps of
     Just (as, bs) -> bs ++ drop (length as) xs
     Nothing -> head xs : replaceLeft reps (tail xs)
 
