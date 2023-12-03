@@ -36,6 +36,9 @@ ghc-options:
 library:
   source-dirs: src
 
+default-extensions:
+- ImportQualifiedPost
+
 executables:
   aoc2023-exe:
     main:                Main.hs
@@ -46,3 +49,4 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - aoc2023
+    - containers
