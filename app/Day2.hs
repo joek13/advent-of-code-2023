@@ -2,7 +2,7 @@ module Day2 (day2a, day2b) where
 
 import Data.Map (Map)
 import Data.Map qualified as Map (assocs, empty, fromList, lookup, unionWith)
-import Lib (readLines, split, strip)
+import Lib (readLines, splitOn, strip)
 
 type Counts = Map String Int
 
@@ -14,11 +14,11 @@ readPresentation str = case (words . strip) str of
   _ -> error $ "Invalid presentation " <> strip str
 
 readRound :: String -> Counts
-readRound = Map.fromList . map readPresentation . split ','
+readRound = Map.fromList . map readPresentation . splitOn ','
 
 readGame :: String -> Game
-readGame str = case split ':' str of
-  [_, roundsStr] -> map readRound (split ';' roundsStr)
+readGame str = case splitOn ':' str of
+  [_, roundsStr] -> map readRound (splitOn ';' roundsStr)
   _ -> error "Invalid game"
 
 presPossible :: Counts -> (String, Int) -> Bool
