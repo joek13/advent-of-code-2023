@@ -3,6 +3,7 @@ module Lib
     split,
     splitOn,
     strip,
+    chunksOf,
   )
 where
 
@@ -24,3 +25,7 @@ strip :: String -> String
 strip = reverse . dropWhile isWhitespace . reverse . dropWhile isWhitespace
   where
     isWhitespace = (== ' ')
+
+chunksOf :: Int -> [a] -> [[a]]
+chunksOf _ [] = []
+chunksOf n as = take n as : chunksOf n (drop n as)
