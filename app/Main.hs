@@ -6,6 +6,7 @@ import Day3 (day3a, day3b)
 import Day4 (day4a, day4b)
 import Day5 (day5a, day5b)
 import Day6 (day6a, day6b)
+import Day7 (day7a, day7b)
 import System.Environment (getArgs)
 
 solution :: String -> IO ()
@@ -21,6 +22,8 @@ solution "5a" = day5a
 solution "5b" = day5b
 solution "6a" = day6a
 solution "6b" = day6b
+solution "7a" = day7a
+solution "7b" = day7b
 solution s = error ("No solution for " <> s)
 
 main :: IO ()
