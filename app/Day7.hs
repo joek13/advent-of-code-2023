@@ -54,12 +54,15 @@ readHandBid line = case words line of
   [hand, bidStr] -> (hand, read bidStr)
   _ -> error "Invalid input"
 
-day7a :: IO ()
-day7a = do
+solve :: (Hand -> Hand -> Ordering) -> IO ()
+solve cmp = do
   handBids <- map readHandBid <$> readLines
-  let compareHand' (h1, _) (h2, _) = compareHandA h1 h2
+  let compareHand' (h1, _) (h2, _) = cmp h1 h2
   let handBidsSorted = sortBy compareHand' handBids
-  print $ sum $ zipWith (curry (\(r, (_, b)) -> r * b)) [1 ..] handBidsSorted
+  print $ sum $ zipWith (\r (_, b) -> r * b) [1 ..] handBidsSorted
+
+day7a :: IO ()
+day7a = solve compareHandA
 
 -- replace jokers with most common non-joker card in hand
 replJokers :: Hand -> Hand
@@ -85,8 +88,4 @@ compareHandB a b =
         x -> x
 
 day7b :: IO ()
-day7b = do
-  handBids <- map readHandBid <$> readLines
-  let compareHand' (h1, _) (h2, _) = compareHandB h1 h2
-  let handBidsSorted = sortBy compareHand' handBids
-  print $ sum $ zipWith (curry (\(r, (_, b)) -> r * b)) [1 ..] handBidsSorted
+day7b = solve compareHandB
